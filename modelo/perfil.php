@@ -14,14 +14,18 @@ if (mysqli_connect_errno()) {
 	exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
 }
 //Traer los datos del usuario del servidor
-$stmt = $conexion->prepare('SELECT contrasenaUsuario, correoUsuario FROM usuarios WHERE idUsuario = ?');
+$stmt = $conexion->prepare('SELECT tipoUsuario, correoUsuario, contrasenaUsuario FROM usuarios WHERE idUsuario = ?');
 // Traer datos con el id del usuario
 $stmt->bind_param('i', $_SESSION['id']);
 $stmt->execute();
-$stmt->bind_result($contrasena, $correo);
+$stmt->bind_result($tipoUsuario, $correoUsuario, $contrasenaUsuario);
 $stmt->fetch();
 $stmt->close();
+$user = $tipoUsuario;
+$correo = $correoUsuario;
+$contra = $contrasenaUsuario;
 ?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -49,11 +53,15 @@ $stmt->close();
 					</tr>
 					<tr>
 						<td>Contrasena:</td>
-						<td><?=$contrasena?></td>
+						<td><?=$contra?></td>
 					</tr>
 					<tr>
-						<td>Correo</td>
+						<td>Correo:</td>
 						<td><?=$correo?></td>
+					</tr>
+					<tr>
+						<td>Usuario:</td>
+						<td><?=$user?></td>
 					</tr>
 				</table>
 			</div>

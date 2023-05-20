@@ -77,7 +77,9 @@ if (!isset($_SESSION['loggedin'])) {
         <div class="profile_name"><?=$_SESSION['name']?></div>
         <div class="job">Usuario</div>
       </div>
-      <a href="salir.php"><i class='bx bx-log-out'></i></a>
+      <a href="#" onclick="salir()">
+        <i class='bx bx-log-out'></i>
+    </a>
     </div>
   </li>
 </ul>
@@ -88,6 +90,16 @@ if (!isset($_SESSION['loggedin'])) {
       <span class="text">Dashboard</span>
     </div>
   </section>
+  <script>
+    let n='<?php echo $_SESSION['name']?>';
+    alert('Bienvenido '+n);
+  </script>
+  <script>
+  function salir() {
+    let n = '<?php echo $_SESSION['name']?>';
+    alert('Adiós ' + n);
+    window.location.href = 'salir.php';}
+  </script>
   <script src="../vista/inicio.js"></script>
 </body>
 </html>

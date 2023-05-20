@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['Crear_Cuenta'])){
             ?> <script>alert('La contrasena debe tener mas de 7 Caracteres!';);window.location='../index.php' </script> <?php
         }
         else {
-            $stmt = $conexion->prepare("INSERT INTO usuarios(nombreUsuario,correoUsuario,contrasenaUsuario) VALUES ('$nombre', '$correo', '$contraHashed');");
+            $stmt = $conexion->prepare("INSERT INTO usuarios(nombreUsuario, tipoUsuario, correoUsuario, contrasenaUsuario) VALUES ('$nombre', 'user', '$correo', '$contraHashed');");
             $exec = $stmt->execute();
             if ($exec){
                 ?> <script>alert('Te has registrado!';);window.location='../index.php' </script> <?php
@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['Crear_Cuenta'])){
             }
         }
     }
+    ?> <script>alert('Se ha creado la cuenta!');window.location='../index.php' </script> <?php
     $query->close();
     mysqli_close($conexion);
 }
