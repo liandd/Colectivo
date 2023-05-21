@@ -1,79 +1,92 @@
 <?php
 session_start();
-
-// Verificar si el usuario está logeado
-if (!isset($_SESSION['loggedin'])) {
-    header('Location: ../index.php');
-    exit;
-}
-
-$id = $_SESSION['id'];
-
-// Verificar si se proporcionó un ID válido para eliminar el registro
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "<script>alert('sapo!');window.location.href='ajustes.php';</script>"; 
-    exit;
-}
-
-
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
 $DATABASE_NAME = 'Colectivo';
 
-// Conectar a la base de datos
-$conexion = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-    exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
+// Verificar si se ha proporcionado el ID del usuario a eliminar
+if (isset($_GET['i'])) {
+    $idUsuario = $_GET['i'];
+} else {
+    // Redirigir si no se proporciona el ID del usuario
+    header('Location: ../index.php');
+    exit();
 }
 
-// Obtener el nombre de usuario antes del borrado
-$idUsuario = $_GET['id'];
-$nombreUser = '';
-
-if ($stmt = $conexion->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
-    $stmt->bind_param('i', $idUsuario);
-    $stmt->execute();
-    $stmt->bind_result($nombreUser);
-    $stmt->fetch();
-    $stmt->close();
+// Crear la conexión a la base de datos
+$conn = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if ($conn->connect_errno) {
+    exit('No se pudo conectar al servidor: ' . $conn->connect_error);
 }
 
-// Preparar y ejecutar la consulta para eliminar el registro
-$stmt = $conexion->prepare('DELETE FROM usuarios WHERE idUsuario = ?');
+// Obtener los datos del usuario a eliminar
+$stmt = $conn->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?');
 $stmt->bind_param('i', $idUsuario);
 $stmt->execute();
-$stmt->close();
+$resultado = $stmt->get_result();
 
-// Obtener el nombre de usuario del administrador que realiza los cambios
+if ($resultado->num_rows === 1) {
+    // El usuario existe, obtener el nombre de usuario
+    $usuario = $resultado->fetch_assoc();
+    $nombreUsuario = $usuario['nombreUsuario'];
+} else {
+    // Redirigir si no se encuentra el usuario
+    header('Location: ../index.php');
+    exit();
+}
+
+// Obtener el nombre de usuario del administrador que realiza la eliminación
 $adminNombreUsuario = $_SESSION['name'];
 
 // Construir la descripción para el registro de auditoría
-$descripcionCompleta = $adminNombreUsuario . ' eliminó los datos de ' . $nombreUser;
+$descripcion = "eliminó al usuario";
+$descripcionCompleta = ucfirst($adminNombreUsuario . " " . $descripcion . " " . $nombreUsuario);
 
 // Insertar el registro de auditoría
-registrarAuditoria('Borrado de datos', $descripcionCompleta, $id, $adminNombreUsuario);
+registrarAuditoria('Eliminación de usuario', $descripcionCompleta, $adminNombreUsuario);
 
-// Redireccionar a la página de ajustes después de eliminar el registro
-echo "<script>alert('Borrado exitoso!');window.location='ajustes.php';</script>";
-exit;
+// Eliminar el usuario de la base de datos
+$stmt = $conn->prepare('DELETE FROM usuarios WHERE idUsuario = ?');
+$stmt->bind_param('i', $idUsuario);
+$stmt->execute();
 
-function registrarAuditoria($accion, $descripcion, $id, $nombreUser)
-{
+if ($stmt->affected_rows > 0) {
+    // La eliminación fue exitosa
+    echo "<script>alert('Usuario eliminado correctamente!');window.location='ajustes.php';</script>";
+    exit();
+} else {
+    // No se pudo eliminar el usuario
+    echo "<script>alert('No fue posible eliminar el usuario!');window.location='ajustes.php';</script>";
+    exit();
+}
+
+$stmt->close();
+$conn->close();
+
+function registrarAuditoria($accion, $descripcion, $nombreUser) {
     $DATABASE_HOST = 'localhost';
     $DATABASE_USER = 'root';
     $DATABASE_PASS = '';
     $DATABASE_NAME = 'Colectivo';
 
-    // Conectar a la base de datos
-    $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-    if (mysqli_connect_errno()) {
-        exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
+    // Crear la conexión a la base de datos
+    $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+    if ($con->connect_errno) {
+        exit('No se pudo conectar al servidor: ' . $con->connect_error);
     }
 
+    // Obtener el ID del administrador que realiza la eliminación
+    $stmt = $con->prepare('SELECT idUsuario FROM usuarios WHERE nombreUsuario = ?');
+    $stmt->bind_param('s', $nombreUser);
+    $stmt->execute();
+    $stmt->bind_result($id);
+    $stmt->fetch();
+    $stmt->close();
+    
     // Insertar el registro de auditoría
     $stmt = $con->prepare('INSERT INTO logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario, nombreUsuario) VALUES (CURDATE(), CURTIME(), ?, ?, ?, ?)');
-    $stmt->bind_param('ssss', $accion, $descripcion, $id, $nombreUser);
+    $stmt->bind_param('ssis', $accion, $descripcion, $id, $nombreUser);
     $stmt->execute();
     $stmt->close();
     $con->close();
