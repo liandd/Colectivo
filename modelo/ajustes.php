@@ -14,14 +14,24 @@ if (mysqli_connect_errno()) {
 	exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
 }
 // Test Tabla de usuarios para el admin tener control
-$sql = "SELECT * FROM usuarios";
-$resultado = mysqli_query($conexion, $sql);
+$sqlFirstUser = "SELECT * FROM usuarios WHERE idUsuario = 1";
+$resultFirstUser = mysqli_query($conexion, $sqlFirstUser);
 
+if (!$resultFirstUser) {
+    exit('Error al ejecutar la consulta: ' . mysqli_error($conexion));
+}
+$firstUser = mysqli_fetch_assoc($resultFirstUser);
+// Reposicionar el puntero del resultado para omitir el primer usuario
+mysqli_data_seek($resultFirstUser, 0);
+// Obtener todos los usuarios (excepto el primero) de la base de datos
+$sqlUsers = "SELECT * FROM usuarios WHERE idUsuario != 1";
+$resultado = mysqli_query($conexion, $sqlUsers);
 if (!$resultado) {
     exit('Error al ejecutar la consulta: ' . mysqli_error($conexion));
 }
-// Empezar desde el segundo usuario en la db
-mysqli_data_seek($resultado, 1);
+$user = $_SESSION['name'];
+$correo = $firstUser['correoUsuario'];
+$contra = $firstUser['contrasenaUsuario'];
 //Traer los datos del usuario del servidor
 $stmt = $conexion->prepare('SELECT tipoUsuario, correoUsuario, contrasenaUsuario FROM usuarios WHERE idUsuario = ?');
 // Traer datos con el id del usuario
@@ -102,39 +112,43 @@ $contra = $contrasenaUsuario;
                 <th>Eliminar</th>
             </tr>
             <tr>
-                <td><?=$_SESSION['id']?></td>
-                <td><?=$_SESSION['name']?></td>
+                <td><?=$firstUser['idUsuario']?></td>
+                <td><?=$firstUser['nombreUsuario']?></td>
                 <td>
-                <span class="password" data-password="<?=$contra?>">
-                    ********
-                </span>
+                    <span class="password" data-password="<?=$firstUser['contrasenaUsuario']?>">
+                        ********
+                    </span>
                 </td>
                 <td>
                     <button class="toggle-password">Mostrar</button>
                 </td>
-                <td><?=$correo?></td>
-                <td><?=$user?></td>
+                <td><?=$firstUser['correoUsuario']?></td>
+                <td><?=$firstUser['tipoUsuario']?></td>
                 <td>No es posible.</td>
                 <td>No es posible.</td>
             </tr>
-            <?php while ($fila = mysqli_fetch_assoc($resultado)) { ?>
+            <?php
+            while ($fila = mysqli_fetch_assoc($resultado)) {
+                ?>
                 <tr>
-            <td><?php echo $fila['idUsuario']; ?></td>
-            <td><?php echo $fila['nombreUsuario']; ?></td>
-            <td>
-                <span class="password" data-password="<?php echo $fila['contrasenaUsuario']; ?>">
-                    ********
-                </span>
-            </td>
-            <td>
-                <button class="toggle-password">Mostrar</button>
-            </td>
-            <td><?php echo $fila['correoUsuario']; ?></td>
-            <td><?php echo $fila['tipoUsuario']; ?></td>
-            <td><a href="editar.php?i=<?php echo $fila['idUsuario']; ?>?>">Editar</a></td>
-            <td><a href="eliminar.php?i=<?php echo $fila['idUsuario']; ?>">Eliminar</a></td>
-            </tr>
-            <?php } ?>
+                    <td><?php echo $fila['idUsuario']; ?></td>
+                    <td><?php echo $fila['nombreUsuario']; ?></td>
+                    <td>
+                        <span class="password" data-password="<?php echo $fila['contrasenaUsuario']; ?>">
+                            ********
+                        </span>
+                    </td>
+                    <td>
+                        <button class="toggle-password">Mostrar</button>
+                    </td>
+                    <td><?php echo $fila['correoUsuario']; ?></td>
+                    <td><?php echo $fila['tipoUsuario']; ?></td>
+                    <td><a href="editar.php?i=<?php echo $fila['idUsuario']; ?>">Editar</a></td>
+                    <td><a href="eliminar.php?i=<?php echo $fila['idUsuario']; ?>">Eliminar</a></td>
+                </tr>
+                <?php
+            }
+            ?>
         </table>
     <script>
         var toggleButtons = document.querySelectorAll('.toggle-password');
