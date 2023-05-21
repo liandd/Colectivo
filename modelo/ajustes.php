@@ -114,7 +114,7 @@ $contra = $contrasenaUsuario;
                 </td>
                 <td><?=$correo?></td>
                 <td><?=$user?></td>
-                <td><a href="editar.php?i=<?php echo $i; ?>">Editar</a></td>
+                <td>No es posible.</td>
                 <td>No es posible.</td>
             </tr>
             <?php while ($fila = mysqli_fetch_assoc($resultado)) { ?>
@@ -131,8 +131,8 @@ $contra = $contrasenaUsuario;
             </td>
             <td><?php echo $fila['correoUsuario']; ?></td>
             <td><?php echo $fila['tipoUsuario']; ?></td>
-            <td><a href="editar.php?i=<?php echo $i; ?>">Editar</a></td>
-            <td><a href="eliminar.php?i=<?php echo $i; ?>">Eliminar</a></td>
+            <td><a href="editar.php?i=<?php echo $fila['idUsuario']; ?>?>">Editar</a></td>
+            <td><a href="eliminar.php?i=<?php echo $fila['idUsuario']; ?>">Eliminar</a></td>
             </tr>
             <?php } ?>
         </table>

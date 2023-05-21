@@ -36,8 +36,8 @@ create table logs_auditoria (
   idLogs_auditoria int(3) auto_increment primary key,
   fechaLogs_auditoria date,
   horaLogs_auditoria time,
-  accionLogs_auditoria varchar(64),
-  descripcionLogs_auditoria varchar(64),
+  accionLogs_auditoria varchar(100),
+  descripcionLogs_auditoria varchar(255),
   idUsuario int(10),
   nombreUsuario varchar(20),
   foreign key (idUsuario) references usuarios(idUsuario)
@@ -126,8 +126,6 @@ delete from logs where timestamp < DATE_SUB(NOW(), interval 1 month);
 -- Creación de la cuenta administradora
 insert into usuarios (nombreUsuario, tipoUsuario, correoUsuario, contrasenaUsuario)
 values ('webMaster', 'Admin', 'webMaster@admin.s5', '$2y$10$AhiJqY49sJLEythPbXkf5epjFHr3miLs3KWMGKOJWupxjOWsbSqaq');
--- test
-insert into usuarios (nombreUsuario, tipoUsuario, correoUsuario, contrasenaUsuario) VALUES ('test', 'user', 'test@correo.s5', 'sapo');
 
 -- Trabajar los usuarios
 select * from usuarios;
