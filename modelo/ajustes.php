@@ -51,82 +51,78 @@ $contra = $contrasenaUsuario;
 	<head>
 		<meta charset="utf-8">
 		<title>Pagina</title>
-		<link href="style.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../css/dashboard.css" type="text/css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <meta charset="utf-8">
     <title>Pagina</title>
     <link href="style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
-        table, th, td {
-         border:1px solid black;
+        #tabla-usuarios.styled-table {
+        width: 100%;
+        border-collapse: collapse;
         }
-        .styled-table {
-            width: 100%;
-            border-collapse: collapse;
+        #tabla-usuarios.styled-table th,
+        #tabla-usuarios.styled-table td {
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
         }
-
-        .styled-table thead th {
-            background-color: #f2f2f2;
-            color: #000;
-            font-weight: bold;
-            padding: 10px;
-            text-align: left;
+        #tabla-usuarios.styled-table th {
+        background-color: #5A062F;
+        color: #fff;
         }
-
-        .styled-table tbody td {
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
+        #tabla-usuarios.styled-table td {
+        background-color: #E4E9F7;
+        color: #340424;
         }
-
-        .styled-table tbody tr:nth-child(even) {
-            background-color: #f9f9f9;
+        #tabla-usuarios.styled-table tr:nth-child(even) td {
+        background-color: #F2F5FC;
         }
-
-        .styled-table tbody tr:last-child td {
-            border-bottom: none;
+        #tabla-usuarios.styled-table tr:hover td {
+        /* Eliminado el cambio de color al pasar el mouse */
         }
     </style>
 </head>
 <body class="loggedin">
-<nav class="navtop">
+  <nav class="navtop">
     <div>
-        <h1>Ajustes</h1>
-        <a href="perfil.php"><i class="fas fa-user-circle"></i>Perfil</a>
-        <a href="salir.php"><i class="fas fa-sign-out-alt"></i>Salir</a>
+      <h1>Ajustes</h1>
+      <a href="perfil.php"><i class="fas fa-user-circle"></i>Perfil</a>
+      <a href="salir.php"><i class="fas fa-sign-out-alt"></i>Salir</a>
     </div>
-</nav>
-<div class="content">
+  </nav>
+  <div class="content">
     <h2>Perfiles de usuarios</h2>
     <div>
-        <p>Informacion de las cuentas desde el panel Administrativo:</p>
-        <table id="tabla-usuarios" class="styled-table">
-            <tr>
-                <th>Id de Usuario</th>
-                <th>Nombre de Usuario</th>
-                <th>Contrasena</th>
-                <th>Mostrar</th>
-                <th>Correo</th>
-                <th>Tipo de Usuario</th>
-                <th>Editar</th>
-                <th>Eliminar</th>
-            </tr>
-            <tr>
-                <td><?=$firstUser['idUsuario']?></td>
-                <td><?=$firstUser['nombreUsuario']?></td>
-                <td>
-                    <span class="password" data-password="<?=$firstUser['contrasenaUsuario']?>">
-                        ********
-                    </span>
-                </td>
-                <td>
-                    <button class="toggle-password">Mostrar</button>
-                </td>
-                <td><?=$firstUser['correoUsuario']?></td>
-                <td><?=$firstUser['tipoUsuario']?></td>
-                <td>No es posible.</td>
-                <td>No es posible.</td>
-            </tr>
+      <p>Informacion de las cuentas desde el panel Administrativo:</p>
+      <table id="tabla-usuarios" class="styled-table">
+        <tr>
+          <th>Id de Usuario</th>
+          <th>Nombre de Usuario</th>
+          <th>Contrasena</th>
+          <th>Mostrar</th>
+          <th>Correo</th>
+          <th>Tipo de Usuario</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+        <tr>
+          <td><?=$firstUser['idUsuario']?></td>
+          <td><?=$firstUser['nombreUsuario']?></td>
+          <td>
+            <span class="password" data-password="<?=$firstUser['contrasenaUsuario']?>">
+              ********
+            </span>
+          </td>
+          <td>
+            <button class="toggle-password">Mostrar</button>
+          </td>
+          <td><?=$firstUser['correoUsuario']?></td>
+          <td><?=$firstUser['tipoUsuario']?></td>
+          <td>No es posible.</td>
+          <td>No es posible.</td>
+        </tr>
             <?php
             while ($fila = mysqli_fetch_assoc($resultado)) {
                 ?>
@@ -143,8 +139,8 @@ $contra = $contrasenaUsuario;
                     </td>
                     <td><?php echo $fila['correoUsuario']; ?></td>
                     <td><?php echo $fila['tipoUsuario']; ?></td>
-                    <td><a href="editar.php?i=<?php echo $fila['idUsuario']; ?>">Editar</a></td>
-                    <td><a href="eliminar.php?i=<?php echo $fila['idUsuario']; ?>">Eliminar</a></td>
+                    <td><a href="editar.php?i=<?php echo $fila['idUsuario']; ?>" style="color:#AC094C">Editar</a></td>
+                    <td><a href="eliminar.php?i=<?php echo $fila['idUsuario']; ?>" style="color:#AC094C">Eliminar</a></td>
                 </tr>
                 <?php
             }
