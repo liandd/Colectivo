@@ -51,38 +51,12 @@ $contra = $contrasenaUsuario;
 	<head>
 		<meta charset="utf-8">
 		<title>Pagina</title>
-		<link rel="stylesheet" href="../css/dashboard.css" type="text/css">
+		<link rel="stylesheet" href="../css/ajustes.css" type="text/css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
         <meta charset="utf-8">
     <title>Pagina</title>
     <link href="style.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <style>
-        #tabla-usuarios.styled-table {
-        width: 100%;
-        border-collapse: collapse;
-        }
-        #tabla-usuarios.styled-table th,
-        #tabla-usuarios.styled-table td {
-        border: 1px solid black;
-        padding: 10px;
-        text-align: center;
-        }
-        #tabla-usuarios.styled-table th {
-        background-color: #5A062F;
-        color: #fff;
-        }
-        #tabla-usuarios.styled-table td {
-        background-color: #E4E9F7;
-        color: #340424;
-        }
-        #tabla-usuarios.styled-table tr:nth-child(even) td {
-        background-color: #F2F5FC;
-        }
-        #tabla-usuarios.styled-table tr:hover td {
-        /* Eliminado el cambio de color al pasar el mouse */
-        }
-    </style>
 </head>
 <body class="loggedin">
   <nav class="navtop">
