@@ -88,7 +88,7 @@ if (!isset($_SESSION['loggedin'])) {
         </ul>
       </li>
       <li>
-        <a href="perfil.php">
+        <a href="ajustes.php">
           <i class='bx bx-cog' ></i>
           <span class="link_name">Ajustes</span>
         </a>

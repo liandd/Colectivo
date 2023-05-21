@@ -4,8 +4,38 @@ $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
 $DATABASE_NAME = 'Colectivo';
+$nombreUsuario = "";
+
+function registrarAuditoria($accion, $descripcion, $id) {
+  $DATABASE_HOST = 'localhost';
+  $DATABASE_USER = 'root';
+  $DATABASE_PASS = '';
+  $DATABASE_NAME = 'Colectivo';
+
+  // Crear la conexión a la base de datos
+  $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+  
+  if ($stmt = $con->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
+    $stmt->bind_param('i', $_SESSION['id']);
+    $stmt->execute();
+    $stmt->bind_result($nombreUsuario);
+    $stmt->fetch();
+    $stmt->close();
+  }
+  if ($con->connect_errno) {
+    exit('No se pudo conectar al servidor: ' . $con->connect_error);
+  }
+    $test = ucfirst($nombreUsuario.$descripcion);
+    // Insertar el registro de auditoría
+    $stmt = $con->prepare('INSERT INTO logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario, nombreUsuario) VALUES ( CURDATE(), CURTIME(), ?, ?, ?, ?)');
+    $stmt->bind_param('ssss', $accion, $test, $id, $nombreUsuario);
+    $stmt->execute();
+    $stmt->close();
+    $con->close();
+}
 
 $conexion = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+
 if ( mysqli_connect_errno() ) {
 	//Si hay un error mostrar:
 	exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
@@ -15,6 +45,7 @@ if ( !isset($_POST['usuario'], $_POST['contrasena']) ) {
 	//Si no puede validar
 	exit('Ingrese nuevamente los datos para ingresar!');
 }
+
 //Consulta sql evitando sql injection:
 if ($stmt = $conexion->prepare('SELECT idUsuario, tipoUsuario, contrasenaUsuario FROM usuarios WHERE nombreUsuario = ?')) {
 	$stmt->bind_param('s', $_POST['usuario']);
@@ -36,6 +67,7 @@ if ($stmt = $conexion->prepare('SELECT idUsuario, tipoUsuario, contrasenaUsuario
             $_SESSION['name'] = $_POST['usuario'];
             $_SESSION['tipoUser'] = $tipoUser;
             $_SESSION['id'] = $id;
+            registrarAuditoria('Inició sesión', ', entró a la pagina.', $id);
             if($_SESSION['tipoUser']=="Admin"){
                 header('Location: ../modelo/inicio.php');
             }

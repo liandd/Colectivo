@@ -38,8 +38,9 @@ create table logs_auditoria (
   horaLogs_auditoria time,
   accionLogs_auditoria varchar(64),
   descripcionLogs_auditoria varchar(64),
-  idUsuario INT(10),
-  FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+  idUsuario int(10),
+  nombreUsuario varchar(20),
+  foreign key (idUsuario) references usuarios(idUsuario)
 );
 
 -- Creación de la tabla calculos
@@ -106,8 +107,8 @@ begin
   set contLogs = (select COUNT(*) from logs_auditoria where accionLogs_auditoria = 'Creación de usuario' and descripcionLogs_auditoria = CONCAT('Se ha creado el usuario: ', new.nombreUsuario));
   
   if contLogs = 0 then
-    insert into logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario)
-values (CURDATE(), CURTIME(), 'Creación de usuario', CONCAT('Se ha creado el usuario: ', new.nombreUsuario), new.idUsuario);
+    insert into logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario, nombreUsuario)
+values (CURDATE(), CURTIME(), 'Creación de usuario', CONCAT('Se ha creado el usuario: ', new.nombreUsuario), new.idUsuario, (SELECT nombreUsuario FROM usuarios WHERE idUsuario = new.idUsuario));
   end if;
 end //
 DELIMITER ;
@@ -117,6 +118,7 @@ insert into logs (message) values ('El usuario X ha creado un nuevo registro en 
 
 -- Ver todos los logs de auditoria
 select * from logs_auditoria;
+update logs_auditoria set nombreUsuario='webMaster' where idUsuario=1;
 delete from logs_auditoria where idLogs_auditoria=2;
 -- Eliminación de registros antiguos de la tabla de logs
 delete from logs where timestamp < DATE_SUB(NOW(), interval 1 month);
