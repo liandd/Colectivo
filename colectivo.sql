@@ -3,7 +3,7 @@ use Colectivo;
 
 -- Creación de la tabla logs
 create table logs (
-  id int auto_increment PRIMARY KEY,
+  id int auto_increment primary key,
   timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   message TEXT
 );
@@ -16,17 +16,17 @@ select * from logs;
 
 -- Creación de la tabla usuarios
 create table usuarios (
-  idUsuario int(10) auto_increment PRIMARY KEY,
-  nombreUsuario VARCHAR(20),
-  tipoUsuario VARCHAR(10),
-  correoUsuario VARCHAR(64) UNIQUE,
-  contrasenaUsuario VARCHAR(100)
+  idUsuario int(10) auto_increment primary key,
+  nombreUsuario varchar(20),
+  tipoUsuario varchar(10),
+  correoUsuario varchar(64) UNIQUE,
+  contrasenaUsuario varchar(100)
 );
 
 -- Creación de la tabla rango_de_frecuencias
 create table rango_de_frecuencias (
   idRango int(3) auto_increment primary key,
-  rango_de_frecuencias double,
+  rango_de_frecuencias varchar(100),
   idUsuario int(10),
   foreign key (idUsuario) references usuarios(idUsuario)
 );
