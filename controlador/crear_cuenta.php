@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['Crear_Cuenta'])){
         $query->store_result();
         if ($query->num_rows > 0){
             ?> <script>alert('El correo ya ha sido registrado!');window.location='../index.php' </script> <?php
-            
         }
         else if (strlen($contrasena) < 6){
             ?> <script>alert('La contrasena debe tener mas de 7 Caracteres!';);window.location='../index.php' </script> <?php
@@ -32,6 +31,27 @@ if ($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST['Crear_Cuenta'])){
             $stmt = $conexion->prepare("INSERT INTO usuarios(nombreUsuario, tipoUsuario, correoUsuario, contrasenaUsuario) VALUES ('$nombre', 'user', '$correo', '$contraHashed');");
             $exec = $stmt->execute();
             if ($exec){
+                //De ser posible arreglar este sistema, linea 34-53
+                //Aun no tiene logs
+                $id = $conexion->insert_id;
+                $rangos = array(
+                array('rango' => 'Ondas de radio: de 3 kHz a 300 GHz', 'idUsuario' => $id),
+                array('rango' => 'Microondas: de 300 MHz a 300 GHz', 'idUsuario' => $id),
+                array('rango' => 'Infrarrojo: de 300 GHz a 400 THz', 'idUsuario' => $id),
+                array('rango' => 'Luz visible: de 400 THz a 800 THz', 'idUsuario' => $id),
+                array('rango' => 'Ultravioleta: de 800 THz a 30 PHz', 'idUsuario' => $id),
+                array('rango' => 'Rayos X: de 30 PHz a 30 EHz', 'idUsuario' => $id),
+                array('rango' => 'Rayos gamma: más de 30 EHz', 'idUsuario' => $id)
+                );
+
+                foreach ($rangos as $rango) {
+                    $rango_frecuencias = $rango['rango'];
+                    $idUsuario = $rango['idUsuario'];
+
+                    $stmt = $conexion->prepare("INSERT INTO rango_de_frecuencias (rango_de_frecuencias, idUsuario) VALUES (?, ?)");
+                    $stmt->bind_param('si', $rango_frecuencias, $idUsuario);
+                    $stmt->execute();
+                }
                 ?> <script>alert('Te has registrado!';);window.location='../index.php' </script> <?php
             }
             else {
