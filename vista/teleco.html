@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/dashboard.css" type="text/css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <style>
+        ul {
+            padding-left: 20px;
+        }
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        
+        .contTable {
+          position: absolute;
+          top: 10;
+          right: 0;
+          width: 220px;
+          height: 100%;
+          background-color: #E4E9F7;
+          padding: 20px;
+          box-sizing: border-box;
+          border-left: 1px solid #ccc;
+          overflow-y: scroll;
+        }
+        
+        .contTable h3 {
+          margin-top: 0;
+          color: #333;
+        }
+        
+        .contTable ul {
+          list-style-type: none;
+          padding: 0;
+        }
+        
+        .contTable li {
+          margin-bottom: 10px;
+        }
+        
+        .contTable a {
+          color: #666;
+          text-decoration: none;
+          transition: color 0.3s;
+        }
+        
+        .contTable a:hover {
+          color: #000;
+        }
+        
+        .content {
+          margin-right: 240px;
+          padding: 20px;
+        }
+        
+        h3 {
+          margin-top: 30px;
+          color: #333;
+        }
+      </style>
+
+    <title>Telecomunicaciones</title>
+
+</head>
+<body>
+    <header>
+        <h1>Telecomunicaciones y Circuitos<h1>
+    </header>
+    <div class="contTable">
+        <h3>Tabla de Contenido</h3>
+        <ul>
+          <li><a href="#1">Espectro electromagnético</a></li>
+          <li><a href="#2">División en bandas por frecuencias y longitudes de onda</a></li>
+          <li><a href="#3">Sistemas que usan esas bandas de frecuencia</a></li>
+          <li><a href="#4">Definición de transmisor FM</a></li>
+          <li><a href="#5">¿Por qué es necesaria la etapa de amplificación en un transmisor FM?</a></li>
+          <li><a href="#6">Definición de modulación de FM</a></li>
+          <li><a href="#7">¿En qué parte del circuito se genera la señal portadora y cómo se modifica este valor?</a></li>
+          <li><a href="#8">¿Qué es y cómo se calcula el índice de modulación?</a></li>
+          <li><a href="#9">¿Cómo se calcula el porcentaje de modulación de FM?</a></li>
+          <li><a href="#10">5 aplicaciones de la modulación FM</a></li>
+          <li><a href="#11">Normas para diseñar y montar circuitos en protoboard y baquelita</a></li>
+          <li><a href="#12">Normas para soldadura en baquelita</a></li>
+          <li><a href="#13">Etapa de amplificación</a></li>
+          <li><a href="#14">Etapa de modulación</a></li>
+          <li><a href="#15">Resonancia en el transmisor FM</a></li>
+          <li><a href="#16">Circuito tanque</a></li>
+          <li><a href="#17">Acople de señales</a></li>
+          <li><a href="#18">Características de construcción de la bobina</a></li>
+        </ul>
+      </div>
+    <div class="content">
+        <h3 id="1">Espectro electromagnético:</h3>
+        <p>El espectro electromagnético es el rango completo de todas las longitudes de onda de la radiación electromagnética. Esto incluye todo, desde ondas de radio de baja frecuencia hasta rayos gamma de alta energía. El espectro electromagnético se divide en diversas bandas en función de la frecuencia y la longitud de onda <a href="./referencias.html">[1]</a>.</p>
+        <h3 id="2">División en bandas por frecuencias y longitudes de onda:</h3>
+        <p>El espectro electromagnético se divide en diferentes bandas según su frecuencia y longitud de onda. Las principales bandas son las siguientes:</p>
+        <ul>
+          <li>Ondas de radio: de 3 kHz a 300 GHz.</li>
+          <li>Microondas: de 300 MHz a 300 GHz.</li>
+          <li>Infrarrojo: de 300 GHz a 400 THz.</li>
+          <li>Luz visible: de 400 THz a 800 THz.</li>
+          <li>Ultravioleta: de 800 THz a 30 PHz.</li>
+          <li>Rayos X: de 30 PHz a 30 EHz.</li>
+          <li>Rayos gamma: más de 30 EHz.</li>
+        </ul>
+        <p>Cada banda se utiliza para diferentes propósitos, como transmisión de información, imágenes médicas, telecomunicaciones y muchas otras aplicaciones <a href="./referencias.html">[2]</a>.</p>
+        <h3 id="3">Sistemas que usan esas bandas de frecuencia para transmisión y/o recepción de información:</h3>
+        <ul>
+          <li>Ondas de radio: se utilizan para la transmisión de radio AM/FM, televisión analógica y comunicaciones móviles.</li>
+          <li>Microondas: se utilizan en la comunicación inalámbrica, radares, hornos de microondas, enlaces satelitales y en la transmisión de datos de alta velocidad.</li>
+          <li>Infrarrojo: se utiliza en la transmisión de datos inalámbrica a corta distancia, en los controles remotos y en los sistemas de vigilancia.</li>
+          <li>Luz visible: se utiliza en la transmisión de datos a través de fibras ópticas, así como en la iluminación.</li>
+          <li>Ultravioleta: se utiliza en la fotolitografía, en la detección de fugas y en el procesamiento de alimentos.</li>
+          <li>Rayos X: se utiliza en imágenes médicas y en la industria.</li>
+          <li>Rayos gamma: se utiliza en la medicina nuclear, en la investigación científica y en la exploración del espacio <a href="./referencias.html">[3]</a>.</li>
+        </ul>
+        <br>
+        <h3 id="4">Definición de transmisor FM y descripción mediante un esquema en bloques las diferentes etapas que conforman un transmisor-receptor de FM:</h3>
+        <p>Un transmisor de FM es un dispositivo que modula la frecuencia de una onda portadora de radiofrecuencia con una señal de información. La modulación de frecuencia se logra al variar la frecuencia de la onda portadora en relación con la señal de información. Al finalizar, se produce una señal de radio que contiene la información original y que puede ser recibida por un receptor de FM.</p>
+        <p>Un transmisor-receptor de FM consta de varias etapas que realizan diferentes funciones:</p>
+        <ul>
+            <li>Etapa de entrada: amplifica la señal de audio de entrada y la envía a la etapa de modulación.</li>
+            <li>Modulación: modula la frecuencia de la onda portadora con la señal de información.</li>
+            <li>Amplificación: amplifica la señal modulada antes de enviarla a la antena para su transmisión.</li>
+            <li>Antena: convierte la señal eléctrica en una onda electromagnética que se irradia al espacio para su transmisión.</li>
+            <li>Etapa de recepción: recibe la señal transmitida por la antena y la amplifica antes de enviarla a la etapa de demodulación.</li>
+            <li>Demodulación: recupera la señal de información original a partir de la señal modulada recibida.</li>
+            <li>Salida: amplifica la señal de audio recuperada y la envía a un altavoz o auriculares para su reproducción.</li>
+            <a href="./referencias.html">[4]</a>
+          </ul>
+        <br>
+        <h3 id="5">¿Por qué es necesaria la etapa de amplificación en un transmisor FM?</h3>
+        <p>Según <a href="./referencias.html">[5]</a>, la modulación de frecuencia (FM) se logra al
+            variar la frecuencia de una señal portadora de radio de
+            acuerdo con la información de la señal moduladora. La señal
+            modulada FM resultante tiene una amplitud constante, pero
+            su frecuencia varía en relación con la señal moduladora. Sin
+            embargo, la señal FM tiene una amplitud relativamente baja
+            en comparación con la señal original antes de la modulación.
+            Por lo tanto, es necesaria la etapa de amplificación para
+            aumentar la amplitud de la señal FM antes de su transmisión,
+            para que pueda viajar a través del aire y ser detectada por los
+            receptores de radio. La amplificación también ayuda a
+            mejorar la calidad de la señal y aumenta la distancia que
+            puede viajar antes de degradarse, lo que es importante para
+            la transmisión de señales de radio de larga distancia.
+        </p>
+        <h3 id="6">Definición de modulación de FM, señales que intervienen y las características de la señal modulada FM:</h3>
+        <p>La modulación de frecuencia (FM) es una técnica de
+            modulación de una señal portadora en la que se varía la
+            frecuencia de la señal portadora en relación con la señal
+            moduladora. La señal moduladora puede ser una señal de
+            audio, como la voz o la música, y se utiliza para controlar la
+            frecuencia de la señal portadora. La variación de la
+            frecuencia de la señal portadora crea una señal modulada en
+            frecuencia que contiene información sobre la señal
+            moduladora.
+            Según <a href="./referencias.html">[6]</a>, la modulación FM es diferente de la
+            modulación de amplitud (AM), que varía la amplitud de la
+            señal portadora en lugar de su frecuencia. La modulación FM
+            se utiliza en la transmisión de señales de radio, como
+            emisoras de radio FM y sistemas de comunicaciones
+            móviles. En la modulación FM, intervienen dos señales: la
+            señal portadora y la señal moduladora. La señal portadora es
+            una señal de alta frecuencia que se utiliza para transportar la
+            información. La señal moduladora es una señal de baja
+            frecuencia que se utiliza para variar la frecuencia de la señal
+            portadora.
+            La señal modulada FM tiene varias características
+            importantes. En primer lugar, la amplitud de la señal
+            modulada FM es constante, lo que significa que la señal tiene
+            una amplitud uniforme en todo momento. En segundo lugar,
+            la señal modulada FM tiene una frecuencia central que
+            corresponde a la frecuencia de la señal portadora sin
+            modular. En tercer lugar, la señal modulada FM tiene un
+            ancho de banda mayor que el de la señal moduladora. El
+            ancho de banda de la señal modulada FM se relaciona
+            directamente con la tasa de variación de la señal moduladora.
+        </p>
+        <h3 id="7">¿En qué parte del circuito se genera la señal portadora y cómo se modifica este valor?</h3>
+        <p>La señal portadora en un transmisor FM se genera en el
+            VCO. La frecuencia de la señal se ajusta mediante un voltaje
+            que controla la capacitancia de un diodo varactor. Se puede
+            modificar la frecuencia variando el voltaje de entrada o
+            mediante un sistema de sintonización de frecuencia que
+            compara una señal de referencia estable con la señal de salida
+            del VCO <a href="./referencias.html">[7]</a>.</p>
+        <h3 id="8">¿Qué es y cómo se calcula el índice de modulación?</h3>
+        <p>El índice de modulación es un parámetro importante en la
+            modulación de una señal, ya que indica cuánto ha sido
+            modulada la señal portadora por la señal moduladora. Se
+            define como la relación entre la desviación máxima de
+            frecuencia causada por la señal moduladora y la frecuencia
+            de la señal portadora.  
+            <div style="text-align: center; font-size: 20px;">
+                \(m = \frac{{\text{{Desviacion maxima de frecuencia}}}}{{\text{{Frecuencia de la señal portadora}}}}\)
+            </div>
+        </p>
+        <h3 id="9">¿Cómo se calcula el porcentaje de modulación de FM?</h3>
+        <p>
+            <div style="text-align: center; font-size: 20px;">
+                \(M = \left(\frac{{\Delta f}}{{f_m}}\right) \times 100\)
+            </div>
+            <br>
+            Donde Δf es la desviación máxima de frecuencia en Hz de
+            la señal modulada y f_m es la frecuencia de la señal
+            modulante en Hz.
+        </p>
+        <h3 id="10">5 aplicaciones de la modulación FM:</h3>
+        <ul>
+            <li>Radiodifusión FM: La aplicación más conocida
+                de la modulación FM es en la radiodifusión,
+                donde se utiliza para transmitir programas de
+                radio <a href="./referencias.html">[8]</a>.
+            </li>
+            <li>Comunicación por satélite: En este caso, la
+                modulación FM proporciona una transmisión
+                más eficiente y una mayor calidad de señal <a href="./referencias.html">[9]</a>.
+            </li>
+            <li>Sistemas de navegación: La modulación FM se
+                utiliza en sistemas de navegación como el
+                Sistema de Navegación Global por Satélite
+                (GNSS), que incluye GPS, GLONASS y Galileo.
+                La modulación FM se utiliza para transmitir
+                señales de temporización y posición de alta
+                precisión <a href="./referencias.html">[10]</a>.
+            </li>
+            <li>Monitorización de la salud: la modulación FM
+                también se utiliza en aplicaciones médicas como
+                la monitorización de la salud. Por ejemplo, los
+                sensores de monitoreo cardíaco utilizan la
+                modulación FM para transmitir señales de
+                electrocardiograma a dispositivos de monitoreo
+                remoto <a href="./referencias.html">[11]</a>.
+            </li>
+            <li>Instrumentación y control: la modulación FM se
+                utiliza en instrumentación y control para la
+                transmisión de datos de sensores y actuadores.
+                La modulación FM proporciona una transmisión
+                de datos robusta y resistente al ruido <a href="./referencias.html">[12]</a>.
+            </li>
+        </ul>
+        <h3 id="11">Normas para diseñar y montar circuitos en protoboard y baquelita:</h3>
+        <p>Las normas en el diseño y montaje de circuitos en protoboard y baquelita se basan en recomendaciones y especificaciones de la industria electrónica. Estas normas aseguran la calidad y fiabilidad del producto, proceso o servicio. El IPC (Association Connecting Electronics Industries) establece normas que abarcan el diseño, fabricación, ensamble, inspección, materiales y pruebas de los circuitos impresos (PCB) <a href="./referencias.html">[20]</a>.</p>
+
+        <h3 id="12">Normas para soldadura en baquelita:</h3>
+        <p>Las normas para una buena soldadura de circuitos en baquelita incluyen limpiar las superficies, utilizar un soldador adecuado, calentar correctamente las partes a unir, evitar sobrecalentamiento y puentes entre pistas, usar flux o pasta para facilitar la soldadura, y limpiar los residuos después del proceso <a href="./referencias.html">[20]</a>.</p>
+
+        <h3 id="13">Etapa de amplificación:</h3>
+        <p>La etapa de amplificación aumenta la intensidad de corriente, tensión o potencia de la señal a transmitir. Puede utilizar componentes activos como tubos de vacío o transistores. Los amplificadores se clasifican en clases A, B, AB, C y D <a href="./referencias.html">[21]</a>.</p>
+
+        <h3 id="14">Etapa de modulación:</h3>
+        <p>La etapa de modulación varía una característica de la onda portadora según una señal de información. La modulación permite adaptar la señal a las condiciones del medio y las necesidades del receptor. Los tipos de modulación incluyen AM, FM, PM y QAM <a href="./referencias.html">[22]</a>.</p>
+
+        <h3 id="15">Resonancia en el transmisor FM:</h3>
+        <p>La resonancia es un fenómeno que ocurre cuando un sistema oscilante se somete a una fuerza periódica que coincide con su frecuencia natural. En el transmisor FM, se utiliza la resonancia en un circuito tanque para sintonizar la frecuencia portadora <a href="./referencias.html">[23]</a>.</p>
+
+        <h3 id="16">Circuito tanque:</h3>
+        <p>Un circuito tanque consiste en un condensador y una bobina en paralelo o en serie. Actúa como un filtro pasabanda o un oscilador y genera o selecciona una señal de una frecuencia determinada <a href="./referencias.html">[23]</a>.</p>
+
+        <h3 id="17">Acople de señales:</h3>
+        <p>Los elementos de acople permiten transferir energía o información entre partes de un circuito sin alterar significativamente la señal. En el transmisor FM, se utiliza un capacitor para acoplar la etapa de amplificación y la etapa de modulación, bloqueando la corriente continua y permitiendo el paso de la corriente alterna <a href="./referencias.html">[24]</a>.</p>
+
+        <h3 id="18">Características de construcción de la bobina:</h3>
+        <p>Las características de una bobina incluyen el número de espiras, el diámetro del alambre, el material del núcleo y la forma geométrica. Los parámetros que afectan la inductancia (L) de una bobina son el número de espiras (N), el área seccional (A), la permeabilidad magnética del núcleo (μ) y la longitud del arrollamiento (l). Estos parámetros se pueden modificar para ajustar el valor de la inductancia <a href="./referencias.html">[25]</a>.</p>
+
+      </div>
+    </div>
+  
+    <footer>
+      &copy; 2023 - Todos los derechos reservados
+    </footer>
+</body>
+</html>

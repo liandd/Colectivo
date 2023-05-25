@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfica del espectro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #E4E9F7;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .rectangulo {
+      width: 60%;
+      height: 60%;
+      background-color: #e0e0e0;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .barra {
+      width: 100%;
+      margin-bottom: 10px;
+      height: 40px;
+      position: relative;
+    }
+
+    .barra .frecuencia {
+      position: absolute;
+      top: 10px;
+      left: 5px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .barra .longitud {
+      position: absolute;
+      top: 10px;
+      right: 5px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .nombre {
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>Gráfica del espectro</h1>
+  <div class="rectangulo">
+    <div class="nombre">Ondas de radio</div>
+    <div class="barra" style="width: 15%; background-color: #f0ff71;">
+      <div class="frecuencia">3 kHz</div>
+      <div class="longitud">100 km</div>
+    </div>
+
+    <div class="nombre">Microondas</div>
+    <div class="barra" style="width: 20%; background-color: #84ff71;">
+      <div class="frecuencia">300 MHz</div>
+      <div class="longitud">1 m</div>
+    </div>
+
+    <div class="nombre">Infrarrojo</div>
+    <div class="barra" style="width: 25%; background-color: #71ffd2;">
+      <div class="frecuencia">300 GHz</div>
+      <div class="longitud">1 mm</div>
+    </div>
+
+    <div class="nombre">Luz visible</div>
+    <div class="barra" style="width: 30%; background-color: #3498db;">
+      <div class="frecuencia">400 THz</div>
+      <div class="longitud">750 nm</div>
+    </div>
+
+    <div class="nombre">Ultravioleta</div>
+    <div class="barra" style="width: 40%; background-color: lightskyblue;">
+      <div class="frecuencia">800 THz</div>
+      <div class="longitud">375 nm</div>
+    </div>
+
+    <div class="nombre">Rayos X</div>
+    <div class="barra" style="width: 50%; background-color: mediumpurple;">
+      <div class="frecuencia">30 PHz</div>
+      <div class="longitud">10 nm</div>
+    </div>
+
+    <div class="nombre">Rayos gamma</div>
+    <div class="barra" style="width: 60%; background-color: #ff71b8;">
+      <div class="frecuencia">30 EHz</div>
+      <div class="longitud">0.01 nm</div>
+    </div>
+  </div>
+</body>
+</html>
