@@ -1,0 +1,29 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  p {
+    line-height: 1.5;
+  }
+  
+  ul {
+    margin-top: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  strong {
+    color: #007bff;
+  }
+  header {
+      background-color: #5A062F; 
+      color: #fff;
+      padding: 0.1% 0%;
+      text-align: center;
+      font-size: 12px;
+  }

@@ -18,6 +18,22 @@ if (!isset($_SESSION['loggedin'])) {
   <head>
     <link rel="stylesheet" href="../css/dashboard.css" type="text/css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+    body {
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    table {
+      margin: auto;
+    }
+    td {
+      padding: 10px;
+      border: 2px solid black;
+      border-color: #5A062F;
+    }
+  </style>
    </head>
 <body>
   <div class="sidebar close">
@@ -41,7 +57,7 @@ if (!isset($_SESSION['loggedin'])) {
         <div class="iocn-link">
           <a href="#">
             <i class='bx bx-book-alt' ></i>
-            <span class="link_name">Marco teórico</span>
+            <span class="link_name">Marco⠀teórico</span>
           </a>
           <i class='bx bxs-chevron-down arrow' ></i>
         </div>
@@ -94,7 +110,7 @@ if (!isset($_SESSION['loggedin'])) {
           <span class="link_name">Ajustes</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#" onclick="cargarIframe('./perfil.php')">Ajustes</a></li>
+          <li><a class="link_name" href="#" onclick="cargarIframe('./ajustes.php')">Ajustes</a></li>
         </ul>
       </li>
       <li>
@@ -117,11 +133,29 @@ if (!isset($_SESSION['loggedin'])) {
       <span class="text">Dashboard</span>
     </div>
     <section class="content">
-    <h2>Implementación de un transmisor FM y otras generalidades del espectro electromagnético</h2>
-    <h3>FM transmitter implementation and other electromagnetic spectrum generalities</h3>
-    <p>C.Castañeda, N. Ceballos, J. Garcia <br>
+    <h2 style="text-align: center;">Implementación de un transmisor FM y otras generalidades del espectro electromagnético</h2>
+    <h3 style="text-align: center;">FM transmitter implementation and other electromagnetic spectrum generalities</h3>
+    <p style="text-align: center;">C.Castañeda, N. Ceballos, J. Garcia <br>
        Universidad Católica de Pereira
     </p>
+    <table>
+  <tr>
+    <td>
+      <img src="../images/Foto2.jpeg" alt="Imagen 1" style="width: 478px; height: 378px;">
+    </td>
+    <td>
+      <img src="../images/Foto3.jpeg" alt="Imagen 2" style="width: 478px; height: 378px;">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="../images/Foto4.jpeg" alt="Imagen 3" style="width: 478px; height: 358px;">
+    </td>
+    <td>
+      <img src="../images/Foto5.jpeg" alt="Imagen 4" style="width: 478px; height: 358px;">
+    </td>
+  </tr>
+</table>
   </section>
   </section>
   <script>
