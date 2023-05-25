@@ -6,6 +6,13 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 ?>
+<script>
+  function cargarIframe(url){
+    let contenidoIframe='<iframe src="'+url+'" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>';
+    let seccionPrincipal = document.querySelector('.home-section');
+    seccionPrincipal.innerHTML = contenidoIframe;
+  }
+</script>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -21,51 +28,55 @@ if (!isset($_SESSION['loggedin'])) {
          Colectivo</span>
     </div>
     <ul class="nav-links">
-      <li>
-        <a href="#">
+    <li>
+        <a href="bienvenida.php">
           <i class='bx bx-grid-alt' ></i>
           <span class="link_name">Dashboard</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Categoria</a></li>
-        </ul>
-      </li>
-      <li>
-        <div class="iocn-link">
-          <a href="#">
-            <i class='bx bx-collection' ></i>
-            <span class="link_name">Parte Informativa</span>
-          </a>
-          <i class='bx bxs-chevron-down arrow' ></i>
-        </div>
-        <ul class="sub-menu">
-          <li><a class="link_name" href="#">Parte Informativa</a></li>
-          <li><a href="#">Fundamento Teorico</a></li>
-          <li><a href="#">Entrega 2</a></li>
-          <li><a href="#">Entrega 3</a></li>
+          <li><a class="link_name" href="bienvenida.php">Inicio</a></li>
         </ul>
       </li>
       <li>
         <div class="iocn-link">
           <a href="#">
             <i class='bx bx-book-alt' ></i>
-            <span class="link_name">Haz tus calculos</span>
+            <span class="link_name">Marco teórico</span>
           </a>
           <i class='bx bxs-chevron-down arrow' ></i>
         </div>
         <ul class="sub-menu">
-          <li><a class="link_name" href="#">Parte Practica</a></li>
-          <li><a href="#">Modulacion</a></li>
-          <li><a href="#">Rango de Frecuencias</a></li>
+          <li><a class="link_name" href="#">Marco teórico</a></li>
+          <li><a href="#" onclick="cargarIframe('../vista/teleco.html')">Telecomunicaciones y Circuitos</a></li>
+          <li><a href="#" onclick="cargarIframe('../vista/progra.html')">Programación y Bases de datos</a></li>
+          <li><a href="#" onclick="cargarIframe('../vista/referencias.html')">Referencias</a></li>
         </ul>
       </li>
       <li>
-        <a href="perfil.php">
-          <i class='bx bx-cog' ></i>
-          <span class="link_name">Ajustes</span>
+        <a href="#" onclick="cargarIframe('../vista/modulacion.html')">
+          <i class='bx bx-pie-chart-alt-2' ></i>
+          <span class="link_name">Modulacion</span>
         </a>
         <ul class="sub-menu blank">
-          <li><a class="link_name" href="#">Ajustes</a></li>
+          <li><a class="link_name" href="#" onclick="cargarIframe('../vista/modulacion.html')">Modulación</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" onclick="cargarIframe('../modelo/ganancia.php')">
+          <i class=' bx bx-bar-chart-alt-2'></i>
+          <span class="link_name">Ganancia</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a href="#" class="link_name" onclick="cargarIframe('../modelo/ganancia.php')">Calcular Ganancia</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#" onclick="cargarIframe('../controlador/consultarRango.php')">
+          <i class='bx bx-line-chart' ></i>
+          <span class="link_name">Rango de Frecuencias</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#" onclick="cargarIframe('../controlador/consultarRango.php')">Rango de Frecuencias</a></li>
         </ul>
       </li>
       <li>
@@ -75,11 +86,9 @@ if (!isset($_SESSION['loggedin'])) {
       </div>
       <div class="name-job">
         <div class="profile_name"><?=$_SESSION['name']?></div>
-        <div class="job">Usuario</div>
+        <div class="job">User</div>
       </div>
-      <a href="#" onclick="salir()">
-        <i class='bx bx-log-out'></i>
-    </a>
+      <a href="salir.php"><i class='bx bx-log-out'></i></a>
     </div>
   </li>
 </ul>
@@ -89,6 +98,13 @@ if (!isset($_SESSION['loggedin'])) {
       <i class='bx bx-menu' ></i>
       <span class="text">Dashboard</span>
     </div>
+    <section class="content">
+    <h2>Implementación de un transmisor FM y otras generalidades del espectro electromagnético</h2>
+    <h3>FM transmitter implementation and other electromagnetic spectrum generalities</h3>
+    <p>C.Castañeda, N. Ceballos, J. Garcia <br>
+       Universidad Católica de Pereira
+    </p>
+  </section>
   </section>
   <script>
     let n='<?php echo $_SESSION['name']?>';
