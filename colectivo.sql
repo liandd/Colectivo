@@ -40,7 +40,7 @@ create table logs_auditoria (
   descripcionLogs_auditoria varchar(255),
   idUsuario int(10),
   nombreUsuario varchar(20),
-  foreign key (idUsuario) references usuarios(idUsuario)
+  foreign key (idUsuario) references usuarios(idUsuario) ON DELETE CASCADE
 );
 
 -- Creación de la tabla calculos
