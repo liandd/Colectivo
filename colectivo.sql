@@ -28,7 +28,7 @@ create table rango_de_frecuencias (
   idRango int(3) auto_increment primary key,
   rango_de_frecuencias varchar(100),
   idUsuario int(10),
-  foreign key (idUsuario) references usuarios(idUsuario)
+  foreign key (idUsuario) references usuarios(idUsuario) ON DELETE CASCADE
 );
 
 -- Creación de la tabla logs_auditoria
