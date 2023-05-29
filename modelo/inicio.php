@@ -146,7 +146,7 @@ function cargarIframe(url, descripcion) {
         <div class="iocn-link">
           <a href="#">
             <i class='bx bx-book-alt'></i>
-            <span class="link_name">Marco teórico</span>
+            <span class="link_name">Marco⠀teórico</span>
           </a>
           <i class='bx bxs-chevron-down arrow'></i>
         </div>
