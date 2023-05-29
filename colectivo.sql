@@ -118,6 +118,8 @@ insert into logs (message) values ('El usuario X ha creado un nuevo registro en 
 
 -- Ver todos los logs de auditoria
 select * from logs_auditoria;
+-- Test Traer los ultimos 10 logs de auditoria
+select * from logs_auditoria order by fechaLogs_auditoria desc, horaLogs_auditoria desc limit 10;
 update logs_auditoria set nombreUsuario='webMaster' where idUsuario=1;
 delete from logs_auditoria where idLogs_auditoria=2;
 -- Eliminación de registros antiguos de la tabla de logs

@@ -10,15 +10,8 @@
    <header class="header">
     <nav class="navbar">
         <a href="http://localhost/php/Colectivo/">Inicio</a>
-        <a href="#">Parte Informativa</a>
-          <a href="#">Parte Practica</a>
-          <a href="https://www.instagram.com/codersucp/">Contactanos</a>
-          <a href="#">Ayuda</a>
+        <a href="https://www.instagram.com/codersucp/">Contactanos</a>
     </nav>
-    <form action="" class="search-bar" style="margin-right: 120px">
-       <input type="text" placeholder="Buscar...">
-       <button><i class='bx bx-search'></i></button>
-    </form>
    </header>
     
     <div class="background"></div>

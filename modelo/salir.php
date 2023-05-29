@@ -1,7 +1,14 @@
 <?php
 session_start();
 $id = $_SESSION['id'];
-session_destroy();
+// Restablece las variables de sesión específicas para el usuario
+unset($_SESSION['loggedin']);
+// Restablece otras variables de sesión que desees eliminar para el usuario
+
+// Destruye la sesión si no hay más variables de sesión específicas para el usuario
+if (empty($_SESSION['loggedin']) ) {
+    session_destroy();
+}
 $nombreUsuario = "";
 
 function registrarAuditoria($accion, $descripcion, $id) {

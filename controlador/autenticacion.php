@@ -62,7 +62,7 @@ if ($stmt = $conexion->prepare('SELECT idUsuario, tipoUsuario, contrasenaUsuario
         if (password_verify($_POST['contrasena'], $contra)) {
             // Inicio de sesion exitoso
             // Crea una sesion para ese usuario
-            session_regenerate_id();
+            session_regenerate_id(true);
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['name'] = $_POST['usuario'];
             $_SESSION['tipoUser'] = $tipoUser;
