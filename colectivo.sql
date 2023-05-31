@@ -43,28 +43,6 @@ create table logs_auditoria (
   foreign key (idUsuario) references usuarios(idUsuario) ON DELETE CASCADE
 );
 
--- Creación de la tabla calculos
-create table calculos (
-  idCalculos int(3) auto_increment primary key,
-  idUsuario int(10),
-  foreign key (idUsuario) references usuarios(idUsuario),
-  idRango int(3),
-  foreign key (idRango) references rango_de_frecuencias(idRango),
-  fechaCalculos date,
-  horaCalculos time,
-  valorEntradaCalculos float(24),
-  tipoCalculo varchar(64),
-  resultadoCalculos double
-);
-
--- Creación de la tabla registro
-create table registro (
-  idRegistro int(10) auto_increment primary key,
-  ingresoRegistro time,
-  salidaRegistro time,
-  idUsuario int(10),
-  foreign key (idUsuario) references usuarios(idUsuario)
-);
 -- Trigger creador de logs de tablas nuevas
 DELIMITER //
 CREATE PROCEDURE log_tablas_nuevas()

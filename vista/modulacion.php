@@ -52,18 +52,45 @@
         let mporcent = (deltaf / fsubm)*100;
         document.getElementById('modulation').textContent = mporcent.toFixed(2) + "%";
         document.getElementById('modulation-index').textContent = m.toFixed(2);
+         // Realizar una solicitud AJAX para enviar los datos a PHP
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'modulacion.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('deltaf='+encodeURIComponent(deltaf)+'&fsubm='+encodeURIComponent(fsubm)+'&m='+encodeURIComponent(m)+'&mporcent='+encodeURIComponent(mporcent));
       }
       else alert("Ingrese un valor valido.")
     }
   </script>
 
 <?php
+session_start();
+// Si el usuario no esta logeado:
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: ./index.php');
+	exit;
+}
+if(isset( $_POST['deltaf']) && isset($_POST['fsubm'])){  
+    $deltaf = $_POST['deltaf'];
+    $fsubm = $_POST['fsubm'];
+    if($deltaf>0 && $fsubm>0){
+    $m = $_POST['m'];
+    $mporcent = $_POST['mporcent'];
+  
+      $descripcion="ha realizado una consulta de modulacion con los siguientes datos de entrada:\n". 
+       "deltaF= $deltaf".", F_m= .$fsubm."."Los cuales han dado los siguientes resultados:\n".
+       "m= $m"."M= $mporcent";
+         // Llamar a la función registrarAuditoria con los datos recibidos
+        registrarAuditoria($descripcion);
+        //registrarAuditoria(); 
+      }
+    }
  function registrarAuditoria($descripcion) {
   $DATABASE_HOST = 'localhost';
   $DATABASE_USER = 'root';
   $DATABASE_PASS = '';
   $DATABASE_NAME = 'Colectivo';
 
+  
   // Crear la conexión a la base de datos
   $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 
@@ -82,28 +109,14 @@
   $descAbre = "El usuario ".$nombreUsuario.", ".$descripcion;
 
   // Insertar el registro de auditoría
-  $stmt = $con->prepare("INSERT INTO logs (?) values (?)");
+  $stmt = $con->prepare("INSERT INTO logs (message) values (?)");
   $stmt->bind_param('s', $descAbre);
   $stmt->execute();
   $stmt->close();
   $con->close();
 }
 
-  if(isset( $_POST['deltaf']) && isset($_POST['fsubm'])){  
-    
-  $deltaf = $_POST['deltaf'];
-  $fsubm = $_POST['fsubm'];
-  if($deltaf>0 && $fsubm>0){
-  $m = $deltaf / $fsubm;
-  $mporcent = ($deltaf / $fsubm)*100;
-
-    $descripcion="ha realizado una consulta de modulacion con los siguientes datos de entrada:\n". 
-     "deltaF= $deltaf".", F_m= .$fsubm."."Los cuales han dado los siguientes resultados:\n".
-     "m= $m"."M= $mporcent";
-
-      registrarAuditoria($descripcion); 
-    }
-  }
+  
 ?>
 
 </head>

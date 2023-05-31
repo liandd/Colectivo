@@ -81,17 +81,15 @@ function cargarIframe(url, descripcion) {
     accion = 'Se abre la página de ajustes de Usuario (Admin)';
   } else if (iframeURL.includes('perfil.php')){
     accion = 'Se abre la página del perfil de usuario (Admin)';
-
-  } else if (iframeURL.includes('ajustes.php')){
-    accion = 'Se abre la página de Perfiles de Usuarios (Admin)';
-    
   } else if (iframeURL.includes('ganancia.php')){
     accion = 'Se abre la página para calcular Ganancia';
+  } else if (iframeURL.includes('/controlador/crear_cuentas.php')){
+    accion = 'Se abre la página para Crear Cuentas (Admin)';
   } else if (iframeURL.includes('historial.php')){
     accion = 'Se abre la página para consultar el Historial (Admin)';
   } else if (iframeURL.includes('/controlador/consultarRango.php')){
     accion = 'Se abre la página para consultar Rangos de Frecuencias';
-  } else {
+  } else{
     accion = 'Se abre Marco Teórico';
   }
 
