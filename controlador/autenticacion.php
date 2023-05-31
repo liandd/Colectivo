@@ -11,7 +11,6 @@ function registrarAuditoria($accion, $descripcion, $id) {
   $DATABASE_USER = 'root';
   $DATABASE_PASS = '';
   $DATABASE_NAME = 'Colectivo';
-
   // Crear la conexión a la base de datos
   $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
   
