@@ -32,6 +32,17 @@ class DatabaseConfig {
     public static function checkAdmin() {
         SessionManager::checkAdminRights();
     }
+
+    public static function getUserData($userId) {
+        $conn = self::getInstance()->getConnection();
+        $stmt = $conn->prepare('SELECT * FROM usuarios WHERE idUsuario = ?');
+        $stmt->bind_param('i', $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        $stmt->close();
+        return $data;
+    }
 }
 
 // Helper function
