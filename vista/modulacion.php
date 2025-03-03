@@ -64,14 +64,12 @@
 
 <?php
 session_start();
-require_once '../config/DatabaseConfig.php';
-
+// Si el usuario no esta logeado:
 if (!isset($_SESSION['loggedin'])) {
 	header('Location: ./index.php');
 	exit;
 }
-
-if(isset($_POST['deltaf']) && isset($_POST['fsubm'])){  
+if(isset( $_POST['deltaf']) && isset($_POST['fsubm'])){  
     $deltaf = $_POST['deltaf'];
     $fsubm = $_POST['fsubm'];
     if($deltaf>0 && $fsubm>0){
@@ -87,9 +85,20 @@ if(isset($_POST['deltaf']) && isset($_POST['fsubm'])){
       }
     }
  function registrarAuditoria($descripcion) {
-  $conn = getDBConnection();
+  $DATABASE_HOST = 'localhost';
+  $DATABASE_USER = 'root';
+  $DATABASE_PASS = '';
+  $DATABASE_NAME = 'Colectivo';
 
-  if ($stmt = $conn->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
+  
+  // Crear la conexión a la base de datos
+  $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+
+  if ($con->connect_errno) {
+    exit('No se pudo conectar al servidor: ' . $con->connect_error);
+  }
+
+  if ($stmt = $con->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
     $stmt->bind_param('i', $_SESSION['id']);
     $stmt->execute();
     $stmt->bind_result($nombreUsuario);
@@ -100,11 +109,11 @@ if(isset($_POST['deltaf']) && isset($_POST['fsubm'])){
   $descAbre = "El usuario ".$nombreUsuario.", ".$descripcion;
 
   // Insertar el registro de auditoría
-  $stmt = $conn->prepare("INSERT INTO logs (message) values (?)");
+  $stmt = $con->prepare("INSERT INTO logs (message) values (?)");
   $stmt->bind_param('s', $descAbre);
   $stmt->execute();
   $stmt->close();
-  $conn->close();
+  $con->close();
 }
 
   

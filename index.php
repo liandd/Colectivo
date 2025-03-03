@@ -34,7 +34,7 @@
         </div>
         <div class="login-section" style="left: 860px;">
             <div class="form-box login">
-                <form action="./controller/authentication.php" method="post">
+                <form action="./controlador/autenticacion.php" method="post">
                     <h2>Iniciar Sesion</h2>
                     <div class="input-box">
                         <span class="icon"><i class='bx bxs-envelope'></i></span>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="remember-password">
                         <label for=""><input type="checkbox">Recordar Datos</label>
-                        <a href="./model/account_recovery.php">Olvido la Contrasena?</a>
+                        <a href="./modelo/recovery_account.php">Olvido la Contrasena?</a>
                     </div>
                     <button class="btn" name="Iniciar_Sesion">Iniciar Sesion</button>
                     <div class="create-account">
@@ -57,7 +57,7 @@
                 </form>
             </div>
             <div class="form-box register">
-                <form action="./controller/create_account.php" method="post">
+                <form action="./controlador/crear_cuenta.php" method="post">
 
                     <h2>Crear Cuenta</h2>
 
@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <script src="./view/index.js"></script>
+    <script src="./vista/index.js"></script>
 </body>
 
 </html>
