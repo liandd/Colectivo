@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../config/database.php';
+require_once '../config/DatabaseConfig.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Create_Account'])) {
 	$name         = trim($_POST['nombre']);

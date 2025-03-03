@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculadora de ganancia del Amplificador</title>
+    <title>Amplifier Gain Calculator</title>
     <style>
-         body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
@@ -13,7 +13,7 @@
             color: #333;
         }
         input[type="submit"] { 
-            border:none; 
+            border: none; 
             display: inline-block;
             padding: 10px 20px;
             background-color: #AC094C; 
@@ -38,36 +38,32 @@
 </head>
 <body>
     <header>
-        <h1>Calculadora de ganancia del Amplificador</h1>
+        <h1>Amplifier Gain Calculator</h1>
     </header>
     <form method="POST" action="">
-        <label for="pi">Potencia de entrada(Watts):</label>
+        <label for="pi">Input Power (Watts):</label>
         <input type="float" id="pi" name="pi" required>
         <br>
-        <label for="po">Potencia de salida(Watts):</label>
+        <label for="po">Output Power (Watts):</label>
         <input type="float" id="po" name="po" required>
-        <input type="submit" name="calcular" value="Calcular">
+        <input type="submit" name="calculate" value="Calculate">
     </form>
     <div></div>
 
 <?php
-function clcGain($potenciaSalida, $potenciaEntrada) {
-    $ganancia_dB = 10 * log10($potenciaSalida / $potenciaEntrada);
-    return number_format($ganancia_dB,2);
+function calcGain($outputPower, $inputPower) {
+    $gain_dB = 10 * log10($outputPower / $inputPower);
+    return number_format($gain_dB, 2);
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['calcular'])) {
-    // Obtener los valores del formulario
-    $pi=$_POST['pi'];
-    $po=$_POST['po'];
-    // Calcular la ganancia del amplificador
-    $gain=clcGain($po,$pi);
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['calculate'])) {
+    $pi = $_POST['pi'];
+    $po = $_POST['po'];
+    $gain = calcGain($po, $pi);
 ?>
     <div>
-        <p>Resultado: <?=$gain?> dB</p>
+        <p>Result: <?=$gain?> dB</p>
     </div>
 <?php
-    // Mostrar los resultados
-    //echo "Ganancia del amplificador: " . $gain . " dB<br>";
 }
 ?>
 </body>
