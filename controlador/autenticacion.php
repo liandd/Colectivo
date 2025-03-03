@@ -1,87 +1,53 @@
 <?php
 session_start();
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'Colectivo';
+require_once '../config/database.php';
 $nombreUsuario = "";
 
 function registrarAuditoria($accion, $descripcion, $id) {
-  $DATABASE_HOST = 'localhost';
-  $DATABASE_USER = 'root';
-  $DATABASE_PASS = '';
-  $DATABASE_NAME = 'Colectivo';
-  // Crear la conexión a la base de datos
-  $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-  
-  if ($stmt = $con->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
+  require_once '../config/database.php';
+  if ($stmt = $conexion->prepare('SELECT nombreUsuario FROM usuarios WHERE idUsuario = ?')) {
     $stmt->bind_param('i', $_SESSION['id']);
     $stmt->execute();
     $stmt->bind_result($nombreUsuario);
     $stmt->fetch();
     $stmt->close();
   }
-  if ($con->connect_errno) {
-    exit('No se pudo conectar al servidor: ' . $con->connect_error);
+  if ($conexion->connect_errno) {
+    exit('No se pudo conectar al servidor: ' . $conexion->connect_error);
   }
-    $test = ucfirst($nombreUsuario.$descripcion);
-    // Insertar el registro de auditoría
-    $stmt = $con->prepare('INSERT INTO logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario, nombreUsuario) VALUES ( CURDATE(), CURTIME(), ?, ?, ?, ?)');
-    $stmt->bind_param('ssss', $accion, $test, $id, $nombreUsuario);
-    $stmt->execute();
-    $stmt->close();
-    $con->close();
+  $test = ucfirst($nombreUsuario.$descripcion);
+  $stmt = $conexion->prepare('INSERT INTO logs_auditoria (fechaLogs_auditoria, horaLogs_auditoria, accionLogs_auditoria, descripcionLogs_auditoria, idUsuario, nombreUsuario) VALUES ( CURDATE(), CURTIME(), ?, ?, ?, ?)');
+  $stmt->bind_param('ssss', $accion, $test, $id, $nombreUsuario);
+  $stmt->execute();
+  $stmt->close();
+  $conexion->close();
 }
 
-$conexion = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-
-if ( mysqli_connect_errno() ) {
-	//Si hay un error mostrar:
-	exit('No se pudo conectar al servidor: ' . mysqli_connect_error());
-}
-//Mirar si los datos del formulario son correctos:
-if ( !isset($_POST['usuario'], $_POST['contrasena']) ) {
-	//Si no puede validar
+if (!isset($_POST['usuario'], $_POST['contrasena'])) {
 	exit('Ingrese nuevamente los datos para ingresar!');
 }
 
-//Consulta sql evitando sql injection:
 if ($stmt = $conexion->prepare('SELECT idUsuario, tipoUsuario, contrasenaUsuario FROM usuarios WHERE nombreUsuario = ?')) {
 	$stmt->bind_param('s', $_POST['usuario']);
 	$stmt->execute();
-	// Guardar el dato para saber si existe en el servidor
 	$stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $contra = password_hash($_POST["contrasena"], PASSWORD_DEFAULT);
-
-        $stmt->bind_result($id, $tipoUser, $contra);
+        $stmt->bind_result($id, $tipoUser, $contraHash);
         $stmt->fetch();
-        // La cuenta existe, verificar contrasena:
-        if (password_verify($_POST['contrasena'], $contra)) {
-            // Inicio de sesion exitoso
-            // Crea una sesion para ese usuario
+        if (password_verify($_POST['contrasena'], $contraHash)) {
             session_regenerate_id(true);
             $_SESSION['loggedin'] = TRUE;
             $_SESSION['name'] = $_POST['usuario'];
             $_SESSION['tipoUser'] = $tipoUser;
             $_SESSION['id'] = $id;
-            registrarAuditoria('Inició sesión', ', entró a la pagina.', $id);
-            if($_SESSION['tipoUser']=="Admin"){
-                header('Location: ../modelo/inicio.php');
-            }
-            else{
-                header('Location: ../modelo/bienvenida.php');
-            }
-            
-           // echo 'Bienvenido probando login de admin, se logea : ' . $_SESSION['nombre'] . '!';
+            registrarAuditoria('Inició sesión', ', entró a la página.', $id);
+            header('Location: ' . (($_SESSION['tipoUser']=="Admin") ? '../modelo/inicio.php' : '../modelo/bienvenida.php'));
         } else {
-            // Incorrect password
-            ?> <script>alert('Datos erroneos, Contraseña incorrecta!');window.location='../index.php' </script> <?php
+            echo "<script>alert('Datos erroneos, Contraseña incorrecta!'); window.location='../index.php';</script>";
         }
     } else {
-        // Incorrect username
-        ?> <script>alert('Datos erroneos, Usuario no existe!');window.location='../index.php' </script> <?php
+        echo "<script>alert('Datos erroneos, Usuario no existe!'); window.location='../index.php';</script>";
     }
 	$stmt->close();
 }

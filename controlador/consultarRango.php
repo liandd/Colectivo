@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+require_once '../config/database.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,25 +73,14 @@
         // Obtener el ID del usuario seleccionado
         $nombreUsuario = $_POST["usuario"];
 
-        // Conexión a la base de datos
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "Colectivo";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        // Verificar la conexión
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-        // Consultar los rangos de frecuencias para el usuario seleccionado
-        //$sql = "SELECT rango_de_frecuencias FROM rango_de_frecuencias WHERE nombreUsuario = $nombreUsuario";
-        $sql = "SELECT rango_de_frecuencias 
-        FROM rango_de_frecuencias 
-        INNER JOIN usuarios ON usuarios.idUsuario = rango_de_frecuencias.idUsuario 
-        WHERE usuarios.nombreUsuario = '$nombreUsuario'";
-        $result = $conn->query($sql);
+        $sql = "SELECT rdf.rango_de_frecuencias 
+                FROM rango_de_frecuencias rdf 
+                INNER JOIN usuarios u ON u.idUsuario = rdf.idUsuario 
+                WHERE u.nombreUsuario = ?";
+        $stmt = $conexion->prepare($sql);
+        $stmt->bind_param('s', $nombreUsuario);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         // Mostrar los resultados en una tabla
         if ($result->num_rows > 0) {
@@ -105,10 +97,8 @@
         } else {
             echo "No se encontraron rangos de frecuencias para el usuario seleccionado.";
         }
-
-        // Cerrar la conexión a la base de datos
-        $conn->close();
-
+        $stmt->close();
+        $conexion->close();
     }
     ?>
 </body>
