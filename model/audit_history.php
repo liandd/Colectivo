@@ -1,41 +1,31 @@
 <?php
-require_once '../config/DatabaseConfig.php';
+require_once 'AuditManager.php';
 SessionManager::checkLogin();
 
-$conn = getDBConnection();
-
-$sqlLogs = "SELECT * FROM logs_auditoria ORDER BY fechaLogs_auditoria DESC, horaLogs_auditoria DESC LIMIT 10";
-$resultLogs = mysqli_query($conn, $sqlLogs);
-if (!$resultLogs) {
-    exit('Error executing query: ' . mysqli_error($conn));
-}
+$auditManager = AuditManager::getInstance();
+$resultLogs = $auditManager->getAuditHistory(10);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Settings Page</title>
-    <link rel="stylesheet" href="../css/settings.css" type="text/css">
+    <title>Audit History</title>
+    <link rel="stylesheet" href="../css/settings.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            setInterval(function () {
-                $('#user-table').load(' #user-table', function () {
-                    let rowsBefore = $('#user-table tbody tr').length;
-
-                    $('#user-table').load('updateTable.php', function () {
-                        let rowsAfter = $('#user-table tbody tr').length;
-                        if (rowsAfter > rowsBefore) {
-                            let sound = document.getElementById("sound");
-                            sound.play();
-                        }
-                    });
+        $(document).ready(function() {
+            setInterval(function() {
+                $('#user-table').load('updateTable.php', function(response, status, xhr) {
+                    if (status === 'success') {
+                        let sound = document.getElementById("sound");
+                        sound.play();
+                    }
                 });
             }, 2100);
         });
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body class="loggedin">
 <nav class="navtop">
@@ -48,7 +38,7 @@ if (!$resultLogs) {
 <div class="content">
     <h2>Audit History</h2>
     <div>
-        <?php if (mysqli_num_rows($resultLogs) > 0) : ?>
+        <?php if ($resultLogs->num_rows > 0) : ?>
             <table id="user-table" class="styled-table">
                 <tr>
                     <th>Log ID</th>
@@ -59,7 +49,7 @@ if (!$resultLogs) {
                     <th>Username</th>
                     <th>User ID</th>
                 </tr>
-                <?php while ($row = mysqli_fetch_assoc($resultLogs)) : ?>
+                <?php while ($row = $resultLogs->fetch_assoc()) : ?>
                     <tr>
                         <td><?php echo $row['idLogs_auditoria']; ?></td>
                         <td><?php echo $row['fechaLogs_auditoria']; ?></td>
