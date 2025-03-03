@@ -35,7 +35,7 @@ $stmt->close();
 <head>
     <meta charset="utf-8">
     <title>User Profiles</title>
-    <link rel="stylesheet" href="../css/ajustes.css" type="text/css">
+    <link rel="stylesheet" href="../css/settings.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body class="loggedin">
